@@ -16,6 +16,7 @@ material = "1.9.0"
 navigationRuntimeKtx = "2.8.3"
 navigationFragment = "2.8.3"
 navigationUiKtx = "2.8.3"
+materiallettericon = "0.2.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ material = { module = "com.google.android.material:material", name = "material",
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+materiallettericon = { group = "com.github.ivbaranov", name = "materiallettericon", version.ref = "materiallettericon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

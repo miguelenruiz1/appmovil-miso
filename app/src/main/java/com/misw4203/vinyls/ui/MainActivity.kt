@@ -15,6 +15,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -29,14 +31,39 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         // Instantiate the navController using the NavHostFragment
         navController = navHostFragment.navController
+
+        // Bottom NavBar
+        val navView: BottomNavigationView = binding.bottomNavigationView
+
+        // Action Bar for Bottom NavBar
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.albumsFragment,
+                R.id.performersFragment,
+                R.id.collectorFragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navView.setupWithNavController(navController)
+        bottomNavItemChangeListener(navView)
+
         // Make sure actions in the ActionBar get propagated to the NavController
         Log.d("act", navController.toString())
-        setSupportActionBar(findViewById(R.id.my_toolbar))
-        setupActionBarWithNavController(navController)
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private fun bottomNavItemChangeListener(navView: BottomNavigationView) {
+        navView.setOnItemSelectedListener { item ->
+            if (item.itemId != navView.selectedItemId) {
+                navController.popBackStack(item.itemId, inclusive = true, saveState = false)
+                navController.navigate(item.itemId)
+            }
+            true
+        }
     }
 }
