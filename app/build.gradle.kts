@@ -70,8 +70,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.materiallettericon)
-    implementation(libs.glide)                  // Glide library
-    kapt(libs.glide.compiler)                   // Glide annotation processor
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
