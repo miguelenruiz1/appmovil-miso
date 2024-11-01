@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/albumsFragment">
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="com.misw4203.vinyls.ui.album.AlbumsFragment"
+        android:label="@string/title_albums"
+        tools:layout="@layout/albums_fragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/performersFragment"
+        android:name="com.misw4203.vinyls.ui.performer.PerformersFragment"
+        android:label="@string/title_performers"
+        tools:layout="@layout/performers_fragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/collectorFragment"
+        android:name="com.misw4203.vinyls.ui.collector.CollectorFragment"
+        android:label="@string/title_collectors"
+        tools:layout="@layout/collector_fragment" >
+    </fragment>
+</navigation>

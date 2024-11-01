@@ -1,47 +1,69 @@
 package com.misw4203.vinyls.ui
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.misw4203.vinyls.ui.theme.VinylsTheme
+import com.misw4203.vinyls.R
+import com.misw4203.vinyls.databinding.ActivityMainBinding
 
-class MainActivity : ComponentActivity() {
+import android.os.Bundle
+import android.util.Log
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import android.view.Menu
+import android.view.MenuItem
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            VinylsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Vinyls",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Get the navigation host fragment from this Activity
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        // Instantiate the navController using the NavHostFragment
+        navController = navHostFragment.navController
+
+        // Bottom NavBar
+        val navView: BottomNavigationView = binding.bottomNavigationView
+
+        // Action Bar for Bottom NavBar
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.albumsFragment,
+                R.id.performersFragment,
+                R.id.collectorFragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navView.setupWithNavController(navController)
+        bottomNavItemChangeListener(navView)
+
+        // Make sure actions in the ActionBar get propagated to the NavController
+        Log.d("act", navController.toString())
+
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    VinylsTheme {
-        Greeting("Android")
+    private fun bottomNavItemChangeListener(navView: BottomNavigationView) {
+        navView.setOnItemSelectedListener { item ->
+            if (item.itemId != navView.selectedItemId) {
+                navController.popBackStack(item.itemId, inclusive = true, saveState = false)
+                navController.navigate(item.itemId)
+            }
+            true
+        }
     }
 }
