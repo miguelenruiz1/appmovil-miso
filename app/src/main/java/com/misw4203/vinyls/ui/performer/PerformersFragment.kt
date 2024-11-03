@@ -5,12 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.R
 import com.misw4203.vinyls.databinding.PerformersFragmentBinding
 import com.misw4203.vinyls.models.Collector
+import com.misw4203.vinyls.models.Performer
 import com.misw4203.vinyls.ui.adapters.PerformersAdapter
 import com.misw4203.vinyls.viewmodels.PerformerViewModel
 

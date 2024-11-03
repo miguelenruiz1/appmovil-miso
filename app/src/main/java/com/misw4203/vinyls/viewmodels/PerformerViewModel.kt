@@ -1,6 +1,7 @@
 package com.misw4203.vinyls.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.misw4203.vinyls.models.Performer
 import com.misw4203.vinyls.network.NetworkServiceAdapter
 
-class PerformerViewModel {
+class PerformerViewModel(application: Application) : AndroidViewModel(application) {
     private val _performers = MutableLiveData<List<Performer>>()
 
     val performers: LiveData<List<Performer>>
