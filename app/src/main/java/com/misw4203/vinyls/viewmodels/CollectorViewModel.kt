@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.misw4203.vinyls.models.Collector
 import com.misw4203.vinyls.network.NetworkServiceAdapter
+import com.misw4203.vinyls.repositories.CollectorsRepository
 
 class CollectorViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val collectorsRepository = CollectorsRepository(application)
 
     private val _collectors = MutableLiveData<List<Collector>>()
 
@@ -31,7 +34,7 @@ class CollectorViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun refreshDataFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getCollectors({
+        collectorsRepository.refreshData({
             _collectors.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
