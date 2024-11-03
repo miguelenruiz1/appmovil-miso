@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="collector"
-            type="com.misw4203.vinyls.models.Collector" />
+            name="performer"
+            type="com.misw4203.vinyls.models.Performer" />
     </data>
 
 
@@ -39,7 +40,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:mli_letter="@{collector.name}"
+                    app:mli_letter="@{performer.name}"
                     app:mli_shape_color="@color/purple_200" />
 
                 <LinearLayout
@@ -60,7 +61,7 @@
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="@{collector.name}"
+                        android:text="@{performer.name}"
                         android:textStyle="bold" />
 
                     <TextView
@@ -71,16 +72,15 @@
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="25 álbumes" />
+                        android:text="@string/artistas_card_description" />
                 </LinearLayout>
-
                 <ImageView
                     android:id="@+id/header_image"
                     android:layout_width="80dp"
                     android:layout_height="0dp"
-                    android:contentDescription="@string/collector_image_description"
+                    android:contentDescription="@string/performer_image_description"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{collector.image}"
+                    app:imageUrl="@{performer.image}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"

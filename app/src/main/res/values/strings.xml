@@ -6,4 +6,9 @@
     <string name="collector_email_placeholder">Correo del coleccionista</string>
     <string name="title_albums">Álbumes</string>
     <string name="title_performers">Artistas</string>
+    <string name="album_cover_description">Album cover</string>
+    <string name="performer_image_description">Performer image</string>
+    <string name="artistas_card_description">Artistas</string>
+    <string name="collector_image_description">Collector image</string>
+    <string name="album_search_hint">Busca un álbum</string>
 </resources>

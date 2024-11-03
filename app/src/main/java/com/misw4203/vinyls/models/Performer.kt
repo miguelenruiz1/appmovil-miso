@@ -1,4 +1,9 @@
 package com.misw4203.vinyls.models
 
-class Performer {
-}
+data class Performer (
+    val performerId:Int,
+    val name:String,
+    val image:String,
+    val birthday:String,
+    val description:String
+)

@@ -10,6 +10,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.misw4203.vinyls.models.Collector
+import com.misw4203.vinyls.models.Performer
 import com.misw4203.vinyls.models.Album
 import org.json.JSONArray
 import org.json.JSONObject
@@ -48,6 +49,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             Collector(
                                 collectorId = item.getInt("id"),
                                 name = item.getString("name"),
+                                image = "https://thispersondoesnotexist.com/",
                                 telephone = item.getString("telephone"),
                                 email = item.getString("email")
                             )
@@ -82,6 +84,37 @@ class NetworkServiceAdapter constructor(context: Context) {
                                 description = item.getString("description"),
                                 genre = item.getString("genre"),
                                 recordLabel = item.getString("recordLabel")
+                            )
+                        )
+                    }
+                    onComplete(list)
+                },
+                {
+                    onError(it)
+                })
+        )
+    }
+
+    fun getPerformers(
+        onComplete: (resp: List<Performer>) -> Unit,
+        onError: (error: VolleyError) -> Unit
+    ) {
+        requestQueue.add(
+            getRequest("musicians",
+                { response ->
+                    Log.d("tagb", response)
+                    val resp = JSONArray(response)
+                    val list = mutableListOf<Performer>()
+                    for (i in 0 until resp.length()) {
+                        val item = resp.getJSONObject(i)
+                        list.add(
+                            i,
+                            Performer(
+                                performerId = item.getInt("id"),
+                                name = item.getString("name"),
+                                image = item.getString("image"),
+                                birthday = item.getString("birthDate"),
+                                description = item.getString("description")
                             )
                         )
                     }

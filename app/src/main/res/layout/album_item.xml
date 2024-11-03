@@ -84,6 +84,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@color/purple_200"
+                    android:contentDescription="@string/album_cover_description"
                     android:scaleType="fitCenter"
                     app:imageUrl="@{album.cover}"
                     app:layout_constraintBottom_toBottomOf="parent"
