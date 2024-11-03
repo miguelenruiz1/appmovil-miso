@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.R
+import com.misw4203.vinyls.databinding.PerformerItemBinding
 import com.misw4203.vinyls.models.Performer
 
 
