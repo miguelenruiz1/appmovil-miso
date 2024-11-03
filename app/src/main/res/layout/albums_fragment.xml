@@ -17,7 +17,7 @@
             android:id="@+id/searchTopBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Busca un álbum"
+            android:hint="@string/album_search_hint"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView

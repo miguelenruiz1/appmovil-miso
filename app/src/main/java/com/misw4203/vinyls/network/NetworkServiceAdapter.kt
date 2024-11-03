@@ -49,6 +49,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             Collector(
                                 collectorId = item.getInt("id"),
                                 name = item.getString("name"),
+                                image = "https://thispersondoesnotexist.com/",
                                 telephone = item.getString("telephone"),
                                 email = item.getString("email")
                             )
@@ -99,7 +100,7 @@ class NetworkServiceAdapter constructor(context: Context) {
         onError: (error: VolleyError) -> Unit
     ) {
         requestQueue.add(
-            getRequest("performers",
+            getRequest("musicians",
                 { response ->
                     Log.d("tagb", response)
                     val resp = JSONArray(response)
@@ -111,7 +112,8 @@ class NetworkServiceAdapter constructor(context: Context) {
                             Performer(
                                 performerId = item.getInt("id"),
                                 name = item.getString("name"),
-                                birthday = item.getString("birhtday"),
+                                image = item.getString("image"),
+                                birthday = item.getString("birthDate"),
                                 description = item.getString("description")
                             )
                         )

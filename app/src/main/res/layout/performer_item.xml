@@ -40,7 +40,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:mli_letter="Manolo"
+                    app:mli_letter="@{performer.name}"
                     app:mli_shape_color="@color/purple_200" />
 
                 <LinearLayout
@@ -72,15 +72,15 @@
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="Artistas" />
+                        android:text="@string/artistas_card_description" />
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/header_image"
                     android:layout_width="80dp"
                     android:layout_height="0dp"
-                    android:background="@color/purple_200"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_launcher_foreground"
+                    android:contentDescription="@string/performer_image_description"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{performer.image}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
