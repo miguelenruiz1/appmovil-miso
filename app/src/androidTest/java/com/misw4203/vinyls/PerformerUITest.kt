@@ -22,17 +22,17 @@ class PerformerUITest {
         SystemClock.sleep(4000)
 
         // Verifica que el RecyclerView esté visible
-        onView(withId(R.id.performers_rv))
+        onView(withId(R.id.performersRv))
             .check(matches(isDisplayed()))
 
         // Verificación de los elementos específicos en el RecyclerView
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.performers_rv).atPositionOnView(0, R.id.performers_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerName))
             .check(matches(withText("Rubén Blades Bellido de Luna")))
 
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.performers_rv).atPositionOnView(0, R.id.performers_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerDescription))
             .check(matches(withText("Artistas")))
 
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.performers_rv).atPositionOnView(0, R.id.performers_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerImage))
             .check(matches(isDisplayed()))
     }
 }

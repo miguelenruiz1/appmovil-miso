@@ -54,7 +54,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/performerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
@@ -65,7 +65,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/performerDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
@@ -75,7 +75,7 @@
                         android:text="@string/artistas_card_description" />
                 </LinearLayout>
                 <ImageView
-                    android:id="@+id/header_image"
+                    android:id="@+id/performerImage"
                     android:layout_width="80dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/performer_image_description"

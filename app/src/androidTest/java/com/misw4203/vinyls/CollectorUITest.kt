@@ -22,17 +22,17 @@ class CollectorUITest {
         SystemClock.sleep(4000)
 
         // Verifica que el RecyclerView esté visible
-        onView(withId(R.id.fragments_rv))
+        onView(withId(R.id.collectorsRv))
             .check(matches(isDisplayed()))
 
         // Verificación de los elementos específicos en el RecyclerView
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.fragments_rv).atPositionOnView(0, R.id.fragments_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.collectorsRv).atPositionOnView(0, R.id.collectorName))
             .check(matches(withText("Manolo Bellon")))
 
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.fragments_rv).atPositionOnView(0, R.id.fragments_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.collectorsRv).atPositionOnView(0, R.id.collectorAlbums))
             .check(matches(withText("25 álbumes")))
 
-        onView(RecyclerViewMatcher.withRecyclerView(R.id.fragments_rv).atPositionOnView(0, R.id.fragments_rv))
+        onView(RecyclerViewMatcher.withRecyclerView(R.id.collectorsRv).atPositionOnView(0, R.id.collectorImage))
             .check(matches(isDisplayed()))
     }
 }
