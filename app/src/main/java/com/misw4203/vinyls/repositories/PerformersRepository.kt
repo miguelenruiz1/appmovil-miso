@@ -7,10 +7,10 @@ import com.misw4203.vinyls.network.NetworkServiceAdapter
 
 class PerformersRepository (val application: Application) {
     fun refreshData(callback: (List<Performer>)->Unit, onError: (VolleyError)->Unit) {
-//        NetworkServiceAdapter.getInstance(application).getPerformers({
-//            callback(it)
-//        },
-//            onError
-//        )
+        NetworkServiceAdapter.getInstance(application).getPerformers({
+            callback(it)
+        },
+            onError
+        )
     }
 }

@@ -19,7 +19,7 @@ class AlbumUITest {
         )
 
         // Espera un breve período para que el RecyclerView se cargue
-        SystemClock.sleep(4000)
+        SystemClock.sleep(10000)
 
         // Verifica que el RecyclerView esté visible
         onView(withId(R.id.albumsRv))

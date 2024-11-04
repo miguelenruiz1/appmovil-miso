@@ -48,6 +48,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Lollipop_5" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung SM-S918B" value="120" />
                 </map>
