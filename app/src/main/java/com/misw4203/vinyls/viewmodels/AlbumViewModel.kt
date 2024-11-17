@@ -12,6 +12,10 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     val albums: LiveData<List<Album>>
         get() = _albums
 
+    private val _albumDetail = MutableLiveData<Album>()
+    val albumDetail: LiveData<Album>
+        get() = _albumDetail
+
     private val _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
@@ -37,10 +41,22 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun getAlbumDetails(albumId: Int) {
+        NetworkServiceAdapter.getInstance(getApplication()).getAlbumDetails(
+            albumId,
+            onComplete = { album ->
+                _albumDetail.value = album
+                _eventNetworkError.value = false
+            },
+            onError = {
+                _eventNetworkError.value = true
+            }
+        )
+    }
+
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
-
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
