@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.databinding.AlbumItemBinding
 import com.misw4203.vinyls.models.Album
 
-class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
+class AlbumsAdapter(private val onAlbumClick: (Album) -> Unit) : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
     var albums: List<Album> = emptyList()
         set(value) {
@@ -16,7 +16,7 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val binding = AlbumItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AlbumViewHolder(binding)
+        return AlbumViewHolder(binding, onAlbumClick)
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
@@ -25,10 +25,18 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
     override fun getItemCount(): Int = albums.size
 
-    class AlbumViewHolder(private val binding: AlbumItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class AlbumViewHolder(
+        private val binding: AlbumItemBinding,
+        private val onAlbumClick: (Album) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(album: Album) {
             binding.album = album
             binding.executePendingBindings()
+
+            // Maneja clics en el álbum
+            binding.root.setOnClickListener {
+                onAlbumClick(album)
+            }
         }
     }
 }
