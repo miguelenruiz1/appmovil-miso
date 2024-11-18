@@ -9,6 +9,6 @@ data class CollectorAlbum (
     val id: Int,
     val collector: Collector?,
     val album: Album?,
-    val status: AlbumStatus,
+    val status: String,
     val price: Float,
 )

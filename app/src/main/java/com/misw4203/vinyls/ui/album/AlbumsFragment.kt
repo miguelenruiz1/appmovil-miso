@@ -30,7 +30,7 @@ class AlbumsFragment : Fragment(R.layout.albums_fragment) {
 
         // Configurar el adaptador y RecyclerView
         adapter = AlbumsAdapter { album ->
-            val action = AlbumsFragmentDirections.actionAlbumsFragmentToAlbumDetailFragment(album.id)
+            val action = AlbumsFragmentDirections.actionAlbumsFragmentToAlbumDetailFragment(album.id!!)
             findNavController().navigate(action)
         }
         binding.albumsRv.layoutManager = LinearLayoutManager(context)

@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.databinding.CollectorDetailFragmentBinding
 import com.misw4203.vinyls.models.CollectorDetail
-import com.misw4203.vinyls.ui.adapters.CollectorDetailAdapter
+import com.misw4203.vinyls.ui.adapters.CollectorDetailAlbumsAdapter
+import com.misw4203.vinyls.ui.adapters.CollectorDetailCommentsAdapter
 import com.misw4203.vinyls.viewmodels.CollectorDetailViewModel
 
 /**
@@ -30,7 +31,8 @@ class CollectorDetailFragment : Fragment() {
     private lateinit var noAlbumsView: TextView
     private lateinit var noCommentsView: TextView
     private lateinit var viewModel: CollectorDetailViewModel
-    private var viewModelAdapter: CollectorDetailAdapter? = null
+    private var albumsAdapter: CollectorDetailAlbumsAdapter? = null
+    private var commentsAdapter: CollectorDetailCommentsAdapter? = null
 
     private val args: CollectorDetailFragmentArgs by navArgs()
 
@@ -41,7 +43,8 @@ class CollectorDetailFragment : Fragment() {
     ): View? {
         _binding = CollectorDetailFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = CollectorDetailAdapter()
+        albumsAdapter = CollectorDetailAlbumsAdapter()
+        commentsAdapter = CollectorDetailCommentsAdapter()
         return view
     }
 
@@ -49,12 +52,12 @@ class CollectorDetailFragment : Fragment() {
         // Sets the album recycler view
         albumRecyclerView = binding.albumsRecyclerView
         albumRecyclerView.layoutManager = LinearLayoutManager(context)
-        albumRecyclerView.adapter = viewModelAdapter
+        albumRecyclerView.adapter = albumsAdapter
 
         // Sets the comment recycler view
         commentRecyclerView = binding.commentsRecyclerView
         commentRecyclerView.layoutManager = LinearLayoutManager(context)
-        commentRecyclerView.adapter = viewModelAdapter
+        commentRecyclerView.adapter = commentsAdapter
 
         // Sets the empty views
         noAlbumsView = binding.noAlbumsView
@@ -72,7 +75,8 @@ class CollectorDetailFragment : Fragment() {
         viewModel.collectorDetail.observe(viewLifecycleOwner, Observer<CollectorDetail> {
             it.apply {
                 Log.d("COLLECTOR Detail IMG", this.toString())
-                viewModelAdapter!!.collectorDetail = this
+                albumsAdapter!!.albums = this.collectorAlbums
+                commentsAdapter!!.comments = this.comments
                 binding.collectorDetail = this
                 toggleEmptyViews()
             }
@@ -98,15 +102,18 @@ class CollectorDetailFragment : Fragment() {
     }
 
     private fun toggleEmptyViews() {
-        if (viewModelAdapter!!.itemCount == 0) {
+        if (albumsAdapter!!.itemCount == 0) {
             noAlbumsView.visibility = View.VISIBLE
-            noCommentsView.visibility = View.VISIBLE
             albumRecyclerView.visibility = View.GONE
-            commentRecyclerView.visibility = View.GONE
         } else {
             noAlbumsView.visibility = View.GONE
-            noCommentsView.visibility = View.GONE
             albumRecyclerView.visibility = View.VISIBLE
+        }
+        if (commentsAdapter!!.itemCount == 0) {
+            noCommentsView.visibility = View.VISIBLE
+            commentRecyclerView.visibility = View.GONE
+        } else {
+            noCommentsView.visibility = View.GONE
             commentRecyclerView.visibility = View.VISIBLE
         }
     }
