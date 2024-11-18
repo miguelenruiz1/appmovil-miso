@@ -7,8 +7,10 @@
     <fragment
         android:id="@+id/albumsFragment"
         android:name="com.misw4203.vinyls.ui.album.AlbumsFragment"
-        android:label="@string/title_albums"
-        tools:layout="@layout/albums_fragment" >
+        android:label="Albums">
+        <action
+            android:id="@+id/action_albumsFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/performersFragment"
@@ -40,4 +42,13 @@
             app:argType="integer"
             android:defaultValue="0"/>
     </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="com.misw4203.vinyls.ui.album.AlbumDetailFragment"
+        android:label="Album Detail">
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

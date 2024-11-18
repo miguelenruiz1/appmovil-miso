@@ -18,6 +18,10 @@ import com.misw4203.vinyls.models.CollectorAlbum
 import com.misw4203.vinyls.models.CollectorDetail
 import org.json.JSONArray
 import org.json.JSONObject
+import com.misw4203.vinyls.models.Track
+import com.misw4203.vinyls.models.Comment
+import com.misw4203.vinyls.models.PerformerDetails
+
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
@@ -184,5 +188,74 @@ class NetworkServiceAdapter constructor(context: Context) {
             errorListener
         )
     }
+    fun getAlbumDetails(
+        albumId: Int,
+        onComplete: (Album) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        requestQueue.add(
+            getRequest("albums/$albumId",
+                { response ->
+                    val item = JSONObject(response)
+                    val album = Album(
+                        id = item.getInt("id"),
+                        name = item.getString("name"),
+                        cover = item.getString("cover"),
+                        releaseDate = item.getString("releaseDate"),
+                        description = item.getString("description"),
+                        genre = item.getString("genre"),
+                        recordLabel = item.getString("recordLabel"),
+                        tracks = item.getJSONArray("tracks").let { tracksJson ->
+                            val tracksList = mutableListOf<Track>()
+                            for (i in 0 until tracksJson.length()) {
+                                val track = tracksJson.getJSONObject(i)
+                                tracksList.add(
+                                    Track(
+                                        id = track.getInt("id"),
+                                        name = track.getString("name"),
+                                        duration = track.getString("duration")
+                                    )
+                                )
+                            }
+                            tracksList
+                        },
+                        performers = item.getJSONArray("performers").let { performersJson ->
+                            val performersList = mutableListOf<PerformerDetails>()
+                            for (i in 0 until performersJson.length()) {
+                                val performer = performersJson.getJSONObject(i)
+                                performersList.add(
+                                    PerformerDetails(
+                                        performerId = performer.getInt("id"),
+                                        name = performer.getString("name"),
+                                        image = performer.getString("image"),
+                                        description = performer.getString("description"),
+                                        birthday = performer.getString("birthDate")
+                                    )
+                                )
+                            }
+                            performersList
+                        },
+                        comments = item.getJSONArray("comments").let { commentsJson ->
+                            val commentsList = mutableListOf<Comment>()
+                            for (i in 0 until commentsJson.length()) {
+                                val comment = commentsJson.getJSONObject(i)
+                                commentsList.add(
+                                    Comment(
+                                        id = comment.getInt("id"),
+                                        description = comment.getString("description"),
+                                        rating = comment.getInt("rating")
+                                    )
+                                )
+                            }
+                            commentsList
+                        }
+                    )
+                    onComplete(album)
+                },
+                { onError(it) }
+            )
+        )
+    }
+
 
 }

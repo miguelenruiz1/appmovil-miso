@@ -6,11 +6,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.R
 import com.misw4203.vinyls.databinding.AlbumsFragmentBinding
-import com.misw4203.vinyls.models.Album
 import com.misw4203.vinyls.ui.adapters.AlbumsAdapter
 import com.misw4203.vinyls.viewmodels.AlbumViewModel
 
@@ -18,43 +17,40 @@ class AlbumsFragment : Fragment(R.layout.albums_fragment) {
 
     private var _binding: AlbumsFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: AlbumViewModel
-    private var viewModelAdapter: AlbumsAdapter? = null
+    private lateinit var adapter: AlbumsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = AlbumsFragmentBinding.bind(view)
 
-        viewModelAdapter = AlbumsAdapter()
-        recyclerView = binding.albumsRv
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = viewModelAdapter
+        // Configurar el ViewModel
+        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(requireActivity().application))
+            .get(AlbumViewModel::class.java)
 
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(requireActivity().application)).get(AlbumViewModel::class.java)
+        // Configurar el adaptador y RecyclerView
+        adapter = AlbumsAdapter { album ->
+            val action = AlbumsFragmentDirections.actionAlbumsFragmentToAlbumDetailFragment(album.id)
+            findNavController().navigate(action)
+        }
+        binding.albumsRv.layoutManager = LinearLayoutManager(context)
+        binding.albumsRv.adapter = adapter
 
-
-        viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
-            it.apply {
-                viewModelAdapter!!.albums = this
-            }
+        // Observar la lista de álbumes
+        viewModel.albums.observe(viewLifecycleOwner, Observer { albums ->
+            adapter.albums = albums
         })
 
-
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
-            if (isNetworkError) onNetworkError()
+        // Manejar errores de red
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer { isError ->
+            if (isError) {
+                Toast.makeText(context, "Error fetching albums", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun onNetworkError() {
-        if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
-            viewModel.onNetworkErrorShown()
-        }
     }
 }
