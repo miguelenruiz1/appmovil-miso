@@ -11,4 +11,8 @@
     <string name="artistas_card_description">Artistas</string>
     <string name="collector_image_description">Collector image</string>
     <string name="album_search_hint">Busca un álbum</string>
+    <string name="collector_detail_title">Coleccionista</string>
+    <string name="collector_detail_albums_title">Álbumes</string>
+    <string name="collector_detail_comments_title">Comentarios</string>
+    <string name="no_items_to_show">No hay elementos para mostrar</string>
 </resources>

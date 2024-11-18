@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.misw4203.vinyls.R
 import com.misw4203.vinyls.databinding.CollectorItemBinding
 import com.misw4203.vinyls.models.Collector
+import com.misw4203.vinyls.ui.collector.CollectorFragmentDirections
 
 class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHolder>(){
 
@@ -39,11 +40,13 @@ class CollectorsAdapter : RecyclerView.Adapter<CollectorsAdapter.CollectorViewHo
         holder.viewDataBinding.also {
             it.collector = collectors[position]
         }
-//        holder.viewDataBinding.root.setOnClickListener {
-//            val action = CollectorFragmentDirections.actionCollectorFragmentToAlbumFragment()
-//            // Navigate using that action
-//            holder.viewDataBinding.root.findNavController().navigate(action)
-//        }
+        holder.viewDataBinding.root.setOnClickListener {
+            val action = CollectorFragmentDirections.actionCollectorsToCollectorDetail(
+                collectorId = collectors[position].id
+            )
+            // Navigate using that action
+            holder.viewDataBinding.root.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
