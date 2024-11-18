@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="collector"
-            type="com.misw4203.vinyls.models.Collector" />
+            name="comment"
+            type="com.misw4203.vinyls.models.Comment" />
     </data>
 
 
@@ -30,18 +30,6 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <com.github.ivbaranov.mli.MaterialLetterIcon
-                    android:id="@+id/materialLetterIcon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="16dp"
-                    android:layout_marginStart="36dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:mli_letter="@{collector.name}"
-                    app:mli_shape_color="@color/purple_200" />
-
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
@@ -49,29 +37,29 @@
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/collectorImage"
-                    app:layout_constraintStart_toEndOf="@+id/materialLetterIcon"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/collectorName"
+                        android:id="@+id/commentRating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="@{collector.name}"
+                        android:text="@{`Comentario ` + String.valueOf(comment.id) + `: ` + String.valueOf(comment.rating) + ` estrellas`}"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/collectorAlbums"
+                        android:id="@+id/commentDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="@{collector.email}" />
+                        android:text="@{comment.description}" />
                 </LinearLayout>
 
                 <ImageView
@@ -80,7 +68,6 @@
                     android:layout_height="0dp"
                     android:contentDescription="@string/collector_image_description"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{collector.image}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
