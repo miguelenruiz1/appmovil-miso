@@ -23,6 +23,24 @@
         android:name="com.misw4203.vinyls.ui.collector.CollectorFragment"
         android:label="@string/title_collectors"
         tools:layout="@layout/collector_fragment" >
+        <action
+            android:id="@+id/action_collectors_to_collector_detail"
+            app:destination="@id/collectorDetailFragment">
+            <argument
+                android:name="collectorId"
+                app:argType="integer"
+                android:defaultValue="0"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/collectorDetailFragment"
+        android:name="com.misw4203.vinyls.ui.collector.CollectorDetailFragment"
+        android:label="@string/collector_detail_title"
+        tools:layout="@layout/collector_detail_fragment" >
+        <argument
+            android:name="collectorId"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
     <fragment
         android:id="@+id/albumDetailFragment"

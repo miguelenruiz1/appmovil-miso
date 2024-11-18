@@ -19,12 +19,6 @@ data class Track(
     val duration: String
 )
 
-data class Comment(
-    val id: Int,
-    val description: String,
-    val rating: Int
-)
-
 data class PerformerDetails(
     val performerId: Int,
     val name: String,

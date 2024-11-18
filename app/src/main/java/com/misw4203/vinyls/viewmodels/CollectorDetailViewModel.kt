@@ -6,19 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.misw4203.vinyls.models.Collector
 import com.misw4203.vinyls.models.CollectorDetail
-import com.misw4203.vinyls.network.NetworkServiceAdapter
 import com.misw4203.vinyls.repositories.CollectorsRepository
 
-class CollectorViewModel(application: Application) : AndroidViewModel(application) {
+class CollectorDetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val collectorsRepository = CollectorsRepository(application)
 
-    private val _collectors = MutableLiveData<List<Collector>>()
+    private val _collectorDetail = MutableLiveData<CollectorDetail>()
 
-    val collectors: LiveData<List<Collector>>
-        get() = _collectors
+    val collectorDetail: LiveData<CollectorDetail>
+        get() = _collectorDetail
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -30,13 +28,12 @@ class CollectorViewModel(application: Application) : AndroidViewModel(applicatio
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    init {
-        refreshDataFromNetwork()
-    }
 
-    private fun refreshDataFromNetwork() {
-        collectorsRepository.refreshData({
-            _collectors.postValue(it)
+    fun retrieveCollectorDetail(collectorId: Int) {
+        collectorsRepository.getCollectorDetail(
+            collectorId,
+            {
+            _collectorDetail.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
         }, {
@@ -50,9 +47,9 @@ class CollectorViewModel(application: Application) : AndroidViewModel(applicatio
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CollectorViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(CollectorDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CollectorViewModel(app) as T
+                return CollectorDetailViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
