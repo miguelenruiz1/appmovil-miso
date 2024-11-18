@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="collector"
-            type="com.misw4203.vinyls.models.Collector" />
+            name="album"
+            type="com.misw4203.vinyls.models.CollectorAlbum" />
     </data>
 
 
@@ -30,26 +30,14 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <com.github.ivbaranov.mli.MaterialLetterIcon
-                    android:id="@+id/materialLetterIcon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="16dp"
-                    android:layout_marginStart="36dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:mli_letter="@{collector.name}"
-                    app:mli_shape_color="@color/purple_200" />
-
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/collectorImage"
-                    app:layout_constraintStart_toEndOf="@+id/materialLetterIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
@@ -60,7 +48,7 @@
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="@{collector.name}"
+                        android:text="@{String.valueOf(album.status) + `: ` + String.valueOf(album.id)}"
                         android:textStyle="bold" />
 
                     <TextView
@@ -71,21 +59,9 @@
                         android:paddingTop="3dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="3dp"
-                        android:text="@{collector.email}" />
+                        android:text="@{`Precio: $` + String.valueOf(album.price)}" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/collectorImage"
-                    android:layout_width="80dp"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/collector_image_description"
-                    android:scaleType="centerCrop"
-                    app:imageUrl="@{collector.image}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
