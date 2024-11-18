@@ -20,6 +20,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import com.misw4203.vinyls.models.Track
 import com.misw4203.vinyls.models.Comment
+import com.misw4203.vinyls.models.PerformerDetail
 import com.misw4203.vinyls.models.PerformerDetails
 
 
@@ -144,6 +145,22 @@ class NetworkServiceAdapter constructor(context: Context) {
                         )
                     }
                     onComplete(list)
+                },
+                {
+                    onError(it)
+                })
+        )
+    }
+    fun getPerformerDetail(
+        performerId: Int,
+        onComplete: (resp: PerformerDetail) -> Unit,
+        onError: (error: VolleyError) -> Unit
+    ) {
+        requestQueue.add(
+            getRequest("performers/${performerId}",
+                { response ->
+                    Log.d("PerformerDetail", response)
+                    onComplete(parseJson(response, PerformerDetail::class.java))
                 },
                 {
                     onError(it)

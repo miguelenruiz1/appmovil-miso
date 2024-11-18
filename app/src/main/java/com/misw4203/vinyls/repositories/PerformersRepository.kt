@@ -13,4 +13,11 @@ class PerformersRepository (val application: Application) {
             onError
         )
     }
+    fun getPerformerDetail(performerId: Int, callback: (PerformerDetail)->Unit, onError: (VolleyError)->Unit) {
+        NetworkServiceAdapter.getInstance(application).getPerformerDetail(performerId, {
+            callback(it)
+        },
+            onError
+        )
+    }
 }
