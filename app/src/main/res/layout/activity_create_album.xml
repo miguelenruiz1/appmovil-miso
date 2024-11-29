@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Campo de texto para el nombre del álbum -->
+    <EditText
+        android:id="@+id/et_album_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del álbum"
+        android:inputType="text" />
+
+    <!-- Campo de texto para la URL de la portada -->
+    <EditText
+        android:id="@+id/et_album_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="URL de la portada"
+        android:inputType="textUri" />
+
+    <!-- Campo de texto para la fecha de lanzamiento -->
+    <EditText
+        android:id="@+id/et_album_release_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de lanzamiento (YYYY-MM-DD)"
+        android:inputType="date" />
+
+    <!-- Campo de texto para la descripción -->
+    <EditText
+        android:id="@+id/et_album_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:inputType="textMultiLine" />
+
+    <!-- Spinner para seleccionar el género -->
+    <Spinner
+        android:id="@+id/spinner_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:spinnerMode="dropdown" />
+
+    <!-- Campo de texto para el sello discográfico -->
+    <Spinner
+        android:id="@+id/spinner_record_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:spinnerMode="dropdown" />
+
+    <!-- Botón para crear el álbum -->
+    <Button
+        android:id="@+id/btn_create_album"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear Álbum" />
+</LinearLayout>

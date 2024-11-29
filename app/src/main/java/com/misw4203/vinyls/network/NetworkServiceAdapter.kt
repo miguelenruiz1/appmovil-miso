@@ -21,6 +21,8 @@ import org.json.JSONObject
 import com.misw4203.vinyls.models.Track
 import com.misw4203.vinyls.models.Comment
 import com.misw4203.vinyls.models.PerformerDetails
+import com.misw4203.vinyls.models.createAlbum
+
 
 
 class NetworkServiceAdapter constructor(context: Context) {
@@ -254,6 +256,49 @@ class NetworkServiceAdapter constructor(context: Context) {
                     onComplete(album)
                 },
                 { onError(it) }
+            )
+        )
+    }
+    fun createAlbum(
+        album: createAlbum,
+        onComplete: (createAlbum) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        val body = JSONObject().apply {
+            put("name", album.name)
+            put("cover", album.cover)
+            put("releaseDate", album.releaseDate)
+            put("description", album.description)
+            put("genre", album.genre)
+            put("recordLabel", album.recordLabel)
+        }
+
+        requestQueue.add(
+            postRequest(
+                path = "albums",
+                body = body,
+                responseListener = { response ->
+                    Log.d("CreateAlbum", "Álbum creado exitosamente: ${response.toString()}")
+                    val createdAlbum = createAlbum(
+                        name = response.getString("name"),
+                        cover = response.getString("cover"),
+                        releaseDate = response.getString("releaseDate"),
+                        description = response.getString("description"),
+                        genre = response.getString("genre"),
+                        recordLabel = response.getString("recordLabel")
+                    )
+                    onComplete(createdAlbum)
+                },
+                errorListener = { error ->
+                    if (error.networkResponse != null) {
+                        val statusCode = error.networkResponse.statusCode
+                        val errorData = String(error.networkResponse.data, Charsets.UTF_8)
+                        Log.e("CreateAlbum", "Error al crear el álbum: $statusCode - $errorData")
+                    } else {
+                        Log.e("CreateAlbum", "Error al crear el álbum: ${error.message}")
+                    }
+                    onError(error)
+                }
             )
         )
     }
