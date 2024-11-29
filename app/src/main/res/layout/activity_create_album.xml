@@ -56,6 +56,8 @@
 
     <!-- Botón para crear el álbum -->
     <Button
+        android:focusable="true"
+        android:importantForAccessibility="yes"
         android:id="@+id/btn_create_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

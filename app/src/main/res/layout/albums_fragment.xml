@@ -12,6 +12,8 @@
 
         <!-- Botón para crear álbum -->
         <Button
+            android:focusable="true"
+            android:importantForAccessibility="yes"
             android:id="@+id/btnCreateAlbum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
