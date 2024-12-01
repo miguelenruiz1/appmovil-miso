@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.misw4203.vinyls.databinding.ActivityCreateAlbumBinding
 import com.misw4203.vinyls.models.createAlbum
-import com.misw4203.vinyls.repositories.CreateAlbumRepository
 import com.misw4203.vinyls.R
+import com.misw4203.vinyls.database.VinylRoomDatabase
 import com.misw4203.vinyls.repositories.AlbumsRepository
 
 
@@ -36,17 +36,27 @@ class CreateAlbumFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Inicializa el repositorio
-        repository = AlbumsRepository(activity?.application ?: Application())
+        val activity = requireActivity()
+        repository = AlbumsRepository(
+            activity.application,
+            VinylRoomDatabase.getDatabase(activity.application).albumsDao()
+        )
 
         // Configurar el Spinner para el género
         val genres = resources.getStringArray(R.array.genre_array)
-        val genreAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genres)
+        val genreAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genres)
         genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerGenre.adapter = genreAdapter
 
         // Capturar el género seleccionado
         binding.spinnerGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 selectedGenre = genres[position]
             }
 
@@ -57,20 +67,27 @@ class CreateAlbumFragment : Fragment() {
 
         // Configurar el Spinner para el sello discográfico
         val recordLabels = resources.getStringArray(R.array.record_label_array)
-        val recordLabelAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, recordLabels)
+        val recordLabelAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, recordLabels)
         recordLabelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerRecordLabel.adapter = recordLabelAdapter
 
         // Capturar el sello discográfico seleccionado
-        binding.spinnerRecordLabel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedRecordLabel = recordLabels[position]
-            }
+        binding.spinnerRecordLabel.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedRecordLabel = recordLabels[position]
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                selectedRecordLabel = recordLabels[0] // Valor predeterminado
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    selectedRecordLabel = recordLabels[0] // Valor predeterminado
+                }
             }
-        }
 
         // Configurar el botón para crear el álbum
         binding.btnCreateAlbum.setOnClickListener {
@@ -80,7 +97,11 @@ class CreateAlbumFragment : Fragment() {
             val description = binding.etAlbumDescription.text.toString()
 
             if (name.isBlank() || cover.isBlank() || releaseDate.isBlank() || description.isBlank()) {
-                Toast.makeText(requireContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Todos los campos son obligatorios",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -98,11 +119,19 @@ class CreateAlbumFragment : Fragment() {
             repository.createAlbum(
                 album = album,
                 onSuccess = {
-                    Toast.makeText(requireContext(), "Álbum creado exitosamente: ${it.name}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Álbum creado exitosamente: ${it.name}",
+                        Toast.LENGTH_LONG
+                    ).show()
                     parentFragmentManager.popBackStack()
                 },
                 onError = {
-                    Toast.makeText(requireContext(), "Error al crear el álbum: $it", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al crear el álbum: $it",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             )
         }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.misw4203.vinyls.models.createAlbum
 import com.misw4203.vinyls.repositories.AlbumsRepository
-import com.misw4203.vinyls.repositories.CreateAlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
