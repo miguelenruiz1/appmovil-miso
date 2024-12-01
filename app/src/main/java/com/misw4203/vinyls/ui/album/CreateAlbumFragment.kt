@@ -1,5 +1,6 @@
 package com.misw4203.vinyls.ui.album
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,14 @@ import com.misw4203.vinyls.databinding.ActivityCreateAlbumBinding
 import com.misw4203.vinyls.models.createAlbum
 import com.misw4203.vinyls.repositories.CreateAlbumRepository
 import com.misw4203.vinyls.R
+import com.misw4203.vinyls.repositories.AlbumsRepository
 
 
 class CreateAlbumFragment : Fragment() {
 
     private var _binding: ActivityCreateAlbumBinding? = null
     private val binding get() = _binding!!
-    private lateinit var repository: CreateAlbumRepository
+    private lateinit var repository: AlbumsRepository
     private lateinit var selectedGenre: String
     private lateinit var selectedRecordLabel: String
 
@@ -34,7 +36,7 @@ class CreateAlbumFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Inicializa el repositorio
-        repository = CreateAlbumRepository(requireContext())
+        repository = AlbumsRepository(activity?.application ?: Application())
 
         // Configurar el Spinner para el género
         val genres = resources.getStringArray(R.array.genre_array)

@@ -36,6 +36,12 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
             adapter.tracks = album.tracks
         })
 
+        // Configurar el botón para crear comentario
+        binding.btnCommentCreate.setOnClickListener {
+            val bottomSheet = CreateCommentBottomSheet()
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+        }
+
         // Obtener los detalles del álbum
         val albumId = AlbumDetailFragmentArgs.fromBundle(requireArguments()).albumId
         viewModel.getAlbumDetails(albumId)
