@@ -24,7 +24,6 @@ import com.misw4203.vinyls.models.PerformerDetails
 import com.misw4203.vinyls.models.createAlbum
 
 
-
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
         const val BASE_URL = "https://backvynils-q6yc.onrender.com/"
@@ -58,7 +57,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                     Log.d("tagb", response)
                     val resp = JSONArray(response)
                     val list = mutableListOf<Collector>()
-                    var item:JSONObject? = null
+                    var item: JSONObject? = null
                     for (i in 0 until resp.length()) {
                         item = resp.getJSONObject(i)
                         list.add(
@@ -191,6 +190,7 @@ class NetworkServiceAdapter constructor(context: Context) {
             errorListener
         )
     }
+
     fun getAlbumDetails(
         albumId: Int,
         onComplete: (Album) -> Unit,
@@ -259,6 +259,7 @@ class NetworkServiceAdapter constructor(context: Context) {
             )
         )
     }
+
     fun createAlbum(
         album: createAlbum,
         onComplete: (createAlbum) -> Unit,
@@ -303,5 +304,53 @@ class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
+    fun createComment(
+        albumId: Int,
+        collectorId: Int,
+        comment: Comment,
+        onComplete: (Comment) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        val body = JSONObject().apply {
+            put("description", comment.description)
+            put("rating", comment.rating)
+            put("collector", {
+                val collectorObject = JSONObject()
+                collectorObject.put("id", collectorId)
+                collectorObject
+            })
+        }
+
+        requestQueue.add(
+            postRequest(
+                path = "albums/$albumId/comments",
+                body = body,
+                responseListener = { response ->
+                    Log.d("CreateComment", "Comentario creado exitosamente: ${response.toString()}")
+                    val createdComment = Comment(
+                        description = response.getString("description"),
+                        rating = response.getInt("rating")
+                    )
+                    onComplete(createdComment)
+                },
+                errorListener = { error ->
+                    if (error.networkResponse != null) {
+                        val statusCode = error.networkResponse.statusCode
+                        val errorData = String(error.networkResponse.data, Charsets.UTF_8)
+                        Log.e(
+                            "CreateComment",
+                            "Error al crear el comentario: $statusCode - $errorData"
+                        )
+                    } else {
+                        Log.e("CreateComment", "Error al crear el comentario: ${error.message}")
+                    }
+                    onError(error)
+                }
+            )
+        )
+
+
+
+    }
 
 }

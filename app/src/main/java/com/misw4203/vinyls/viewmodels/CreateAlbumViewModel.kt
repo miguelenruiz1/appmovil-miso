@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.misw4203.vinyls.models.createAlbum
+import com.misw4203.vinyls.repositories.AlbumsRepository
 import com.misw4203.vinyls.repositories.CreateAlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CreateAlbumViewModel(private val repository: CreateAlbumRepository) : ViewModel() {
+class CreateAlbumViewModel(private val repository: AlbumsRepository) : ViewModel() {
 
     private val _albumCreated = MutableLiveData<createAlbum?>()
     val albumCreated: LiveData<createAlbum?> get() = _albumCreated

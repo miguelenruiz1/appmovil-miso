@@ -1,6 +1,5 @@
 package com.misw4203.vinyls.ui.album
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -41,7 +40,6 @@ class AlbumsFragment : Fragment(R.layout.albums_fragment) {
         binding.btnCreateAlbum.setOnClickListener {
             findNavController().navigate(R.id.createAlbumFragment)
         }
-
 
         // Observar la lista de álbumes
         viewModel.albums.observe(viewLifecycleOwner, Observer { albums ->
