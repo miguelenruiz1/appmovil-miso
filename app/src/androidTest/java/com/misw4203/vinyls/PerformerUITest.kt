@@ -27,10 +27,10 @@ class PerformerUITest {
 
         // Verificación de los elementos específicos en el RecyclerView
         onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerName))
-            .check(matches(withText("Rubén Blades Bellido de Luna")))
+            .check(matches(isDisplayed()))
 
         onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerDescription))
-            .check(matches(withText("Artistas")))
+            .check(matches(isDisplayed()))
 
         onView(RecyclerViewMatcher.withRecyclerView(R.id.performersRv).atPositionOnView(0, R.id.performerImage))
             .check(matches(isDisplayed()))

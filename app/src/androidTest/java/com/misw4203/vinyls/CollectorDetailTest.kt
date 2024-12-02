@@ -2,7 +2,6 @@ package com.misw4203.vinyls
 
 import com.misw4203.vinyls.models.CollectorDetail
 import com.misw4203.vinyls.models.Comment
-import com.misw4203.vinyls.ui.album.AlbumDetail
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
