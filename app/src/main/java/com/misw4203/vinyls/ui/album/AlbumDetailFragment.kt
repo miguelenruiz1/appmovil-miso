@@ -14,7 +14,8 @@ import com.misw4203.vinyls.viewmodels.AlbumViewModel
 class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
 
     private var _binding: FragmentAlbumDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentAlbumDetailBinding
+        get() = _binding ?: throw IllegalStateException("Binding should not be null")
     private lateinit var viewModel: AlbumViewModel
     private val adapter = TracksAdapter()
 
