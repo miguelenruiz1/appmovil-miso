@@ -1,19 +1,30 @@
 package com.misw4203.vinyls.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.android.volley.VolleyError
+import com.misw4203.vinyls.database.VinylRoomDatabase
 import com.misw4203.vinyls.models.Album
+import com.misw4203.vinyls.models.AlbumDetail
 import com.misw4203.vinyls.network.NetworkServiceAdapter
+import com.misw4203.vinyls.repositories.AlbumsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AlbumViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository = AlbumsRepository(
+        application,
+        VinylRoomDatabase.getDatabase(application.applicationContext).albumsDao()
+    )
 
     private val _albums = MutableLiveData<List<Album>>()
     val albums: LiveData<List<Album>>
         get() = _albums
 
-    private val _albumDetail = MutableLiveData<Album>()
-    val albumDetail: LiveData<Album>
+    private val _albumDetail = MutableLiveData<AlbumDetail>()
+    val albumDetail: LiveData<AlbumDetail>
         get() = _albumDetail
 
     private val _eventNetworkError = MutableLiveData<Boolean>(false)
@@ -25,33 +36,34 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        fetchAlbumsFromNetwork()
+        refreshData()
     }
 
-    private fun fetchAlbumsFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getAlbums(
-            onComplete = {
-                _albums.value = it
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-            },
-            onError = {
-                _eventNetworkError.value = true
-            }
-        )
+    private fun refreshData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.refreshData({
+                _albums.postValue(it)
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }, {
+                _eventNetworkError.postValue(true)
+            })
+        }
     }
 
     fun getAlbumDetails(albumId: Int) {
-        NetworkServiceAdapter.getInstance(getApplication()).getAlbumDetails(
-            albumId,
-            onComplete = { album ->
-                _albumDetail.value = album
-                _eventNetworkError.value = false
-            },
-            onError = {
-                _eventNetworkError.value = true
-            }
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            NetworkServiceAdapter.getInstance(getApplication()).getAlbumDetails(
+                albumId,
+                onComplete = { album ->
+                    _albumDetail.postValue(album)
+                    _eventNetworkError.postValue(false)
+                },
+                onError = {
+                    _eventNetworkError.postValue(true)
+                }
+            )
+        }
     }
 
     fun onNetworkErrorShown() {

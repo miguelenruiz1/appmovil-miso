@@ -14,13 +14,13 @@ import com.google.gson.Gson
 import com.misw4203.vinyls.models.Collector
 import com.misw4203.vinyls.models.Performer
 import com.misw4203.vinyls.models.Album
+import com.misw4203.vinyls.models.AlbumDetail
 import com.misw4203.vinyls.models.CollectorAlbum
 import com.misw4203.vinyls.models.CollectorDetail
 import org.json.JSONArray
 import org.json.JSONObject
 import com.misw4203.vinyls.models.Track
 import com.misw4203.vinyls.models.Comment
-import com.misw4203.vinyls.models.PerformerDetails
 import com.misw4203.vinyls.models.createAlbum
 
 
@@ -193,14 +193,14 @@ class NetworkServiceAdapter constructor(context: Context) {
 
     fun getAlbumDetails(
         albumId: Int,
-        onComplete: (Album) -> Unit,
+        onComplete: (AlbumDetail) -> Unit,
         onError: (VolleyError) -> Unit
     ) {
         requestQueue.add(
             getRequest("albums/$albumId",
                 { response ->
                     val item = JSONObject(response)
-                    val album = Album(
+                    val album = AlbumDetail(
                         id = item.getInt("id"),
                         name = item.getString("name"),
                         cover = item.getString("cover"),
@@ -223,12 +223,12 @@ class NetworkServiceAdapter constructor(context: Context) {
                             tracksList
                         },
                         performers = item.getJSONArray("performers").let { performersJson ->
-                            val performersList = mutableListOf<PerformerDetails>()
+                            val performersList = mutableListOf<Performer>()
                             for (i in 0 until performersJson.length()) {
                                 val performer = performersJson.getJSONObject(i)
                                 performersList.add(
-                                    PerformerDetails(
-                                        performerId = performer.getInt("id"),
+                                    Performer(
+                                        id = performer.getInt("id"),
                                         name = performer.getString("name"),
                                         image = performer.getString("image"),
                                         description = performer.getString("description"),
