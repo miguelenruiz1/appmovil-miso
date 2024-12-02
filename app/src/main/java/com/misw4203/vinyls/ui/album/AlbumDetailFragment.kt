@@ -14,7 +14,8 @@ import com.misw4203.vinyls.viewmodels.AlbumViewModel
 class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
 
     private var _binding: FragmentAlbumDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentAlbumDetailBinding
+        get() = _binding ?: throw IllegalStateException("Binding should not be null")
     private lateinit var viewModel: AlbumViewModel
     private val adapter = TracksAdapter()
 
@@ -34,6 +35,11 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
         viewModel.albumDetail.observe(viewLifecycleOwner, Observer { album ->
             binding.album = album
             adapter.tracks = album.tracks
+            // Configurar el botón para crear comentario
+            binding.btnCommentCreate.setOnClickListener {
+                val bottomSheet = CreateCommentBottomSheet.forAlbum(album.id ?: 100)
+                bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+            }
         })
 
         // Obtener los detalles del álbum

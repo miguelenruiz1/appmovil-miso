@@ -1,12 +1,11 @@
 package com.misw4203.vinyls.models
 
-enum class AlbumStatus(status: String) {
-    ACTIVE("Active"),
-    INACTIVE("Inactive")
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "collector_albums_table")
 data class CollectorAlbum (
-    val id: Int,
+    @PrimaryKey val id: Int,
     val collector: Collector?,
     val album: Album?,
     val status: String,

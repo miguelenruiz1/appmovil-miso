@@ -4,32 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="16dp"
     tools:context=".ui.album.AlbumsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Botón para crear álbum -->
+        <Button
+            android:focusable="true"
+            android:importantForAccessibility="yes"
+            android:id="@+id/btnCreateAlbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_album"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <!-- Barra de búsqueda -->
         <com.google.android.material.search.SearchBar
             android:id="@+id/searchTopBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/album_search_hint"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btnCreateAlbum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/albumsRv"
-            android:layout_width="369dp"
-            android:layout_height="571dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/searchTopBar"
-            app:layout_constraintVertical_bias="0.177"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/album_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

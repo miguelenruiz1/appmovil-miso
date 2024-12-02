@@ -82,12 +82,16 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
     implementation(libs.materiallettericon)
     implementation(libs.glide)
     implementation(libs.gson)
 
     // Picasso
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation(libs.picasso)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -101,6 +105,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core.v351)
     androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.room.testing)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

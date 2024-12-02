@@ -14,13 +14,14 @@ import com.google.gson.Gson
 import com.misw4203.vinyls.models.Collector
 import com.misw4203.vinyls.models.Performer
 import com.misw4203.vinyls.models.Album
+import com.misw4203.vinyls.models.AlbumDetail
 import com.misw4203.vinyls.models.CollectorAlbum
 import com.misw4203.vinyls.models.CollectorDetail
 import org.json.JSONArray
 import org.json.JSONObject
 import com.misw4203.vinyls.models.Track
 import com.misw4203.vinyls.models.Comment
-import com.misw4203.vinyls.models.PerformerDetails
+import com.misw4203.vinyls.models.createAlbum
 
 
 class NetworkServiceAdapter constructor(context: Context) {
@@ -56,7 +57,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                     Log.d("tagb", response)
                     val resp = JSONArray(response)
                     val list = mutableListOf<Collector>()
-                    var item:JSONObject? = null
+                    var item: JSONObject? = null
                     for (i in 0 until resp.length()) {
                         item = resp.getJSONObject(i)
                         list.add(
@@ -189,16 +190,17 @@ class NetworkServiceAdapter constructor(context: Context) {
             errorListener
         )
     }
+
     fun getAlbumDetails(
         albumId: Int,
-        onComplete: (Album) -> Unit,
+        onComplete: (AlbumDetail) -> Unit,
         onError: (VolleyError) -> Unit
     ) {
         requestQueue.add(
             getRequest("albums/$albumId",
                 { response ->
                     val item = JSONObject(response)
-                    val album = Album(
+                    val album = AlbumDetail(
                         id = item.getInt("id"),
                         name = item.getString("name"),
                         cover = item.getString("cover"),
@@ -221,12 +223,12 @@ class NetworkServiceAdapter constructor(context: Context) {
                             tracksList
                         },
                         performers = item.getJSONArray("performers").let { performersJson ->
-                            val performersList = mutableListOf<PerformerDetails>()
+                            val performersList = mutableListOf<Performer>()
                             for (i in 0 until performersJson.length()) {
                                 val performer = performersJson.getJSONObject(i)
                                 performersList.add(
-                                    PerformerDetails(
-                                        performerId = performer.getInt("id"),
+                                    Performer(
+                                        id = performer.getInt("id"),
                                         name = performer.getString("name"),
                                         image = performer.getString("image"),
                                         description = performer.getString("description"),
@@ -258,5 +260,97 @@ class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
+    fun createAlbum(
+        album: createAlbum,
+        onComplete: (createAlbum) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        val body = JSONObject().apply {
+            put("name", album.name)
+            put("cover", album.cover)
+            put("releaseDate", album.releaseDate)
+            put("description", album.description)
+            put("genre", album.genre)
+            put("recordLabel", album.recordLabel)
+        }
+
+        requestQueue.add(
+            postRequest(
+                path = "albums",
+                body = body,
+                responseListener = { response ->
+                    Log.d("CreateAlbum", "Álbum creado exitosamente: ${response.toString()}")
+                    val createdAlbum = createAlbum(
+                        name = response.getString("name"),
+                        cover = response.getString("cover"),
+                        releaseDate = response.getString("releaseDate"),
+                        description = response.getString("description"),
+                        genre = response.getString("genre"),
+                        recordLabel = response.getString("recordLabel")
+                    )
+                    onComplete(createdAlbum)
+                },
+                errorListener = { error ->
+                    if (error.networkResponse != null) {
+                        val statusCode = error.networkResponse.statusCode
+                        val errorData = String(error.networkResponse.data, Charsets.UTF_8)
+                        Log.e("CreateAlbum", "Error al crear el álbum: $statusCode - $errorData")
+                    } else {
+                        Log.e("CreateAlbum", "Error al crear el álbum: ${error.message}")
+                    }
+                    onError(error)
+                }
+            )
+        )
+    }
+
+    fun createComment(
+        albumId: Int,
+        collectorId: Int,
+        comment: Comment,
+        onComplete: (Comment) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        val body = JSONObject().apply {
+            put("description", comment.description)
+            put("rating", comment.rating)
+            put("collector", {
+                val collectorObject = JSONObject()
+                collectorObject.put("id", collectorId)
+                collectorObject
+            })
+        }
+
+        requestQueue.add(
+            postRequest(
+                path = "albums/$albumId/comments",
+                body = body,
+                responseListener = { response ->
+                    Log.d("CreateComment", "Comentario creado exitosamente: ${response.toString()}")
+                    val createdComment = Comment(
+                        description = response.getString("description"),
+                        rating = response.getInt("rating")
+                    )
+                    onComplete(createdComment)
+                },
+                errorListener = { error ->
+                    if (error.networkResponse != null) {
+                        val statusCode = error.networkResponse.statusCode
+                        val errorData = String(error.networkResponse.data, Charsets.UTF_8)
+                        Log.e(
+                            "CreateComment",
+                            "Error al crear el comentario: $statusCode - $errorData"
+                        )
+                    } else {
+                        Log.e("CreateComment", "Error al crear el comentario: ${error.message}")
+                    }
+                    onError(error)
+                }
+            )
+        )
+
+
+
+    }
 
 }

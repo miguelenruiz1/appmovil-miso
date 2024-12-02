@@ -4,20 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/albumsFragment">
+
+    <!-- Fragmento de álbumes -->
     <fragment
         android:id="@+id/albumsFragment"
         android:name="com.misw4203.vinyls.ui.album.AlbumsFragment"
         android:label="Albums">
+        <!-- Acción para navegar al detalle del álbum -->
         <action
             android:id="@+id/action_albumsFragment_to_albumDetailFragment"
             app:destination="@id/albumDetailFragment" />
+        <!-- Acción para navegar al fragmento de creación de álbum -->
+        <action
+            android:id="@+id/action_albumsFragment_to_createAlbumFragment"
+            app:destination="@id/createAlbumFragment" />
     </fragment>
+
+    <!-- Fragmento de detalle del álbum -->
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="com.misw4203.vinyls.ui.album.AlbumDetailFragment"
+        android:label="Album Detail">
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+    </fragment>
+
+    <!-- Fragmento para crear álbum -->
+    <fragment
+        android:id="@+id/createAlbumFragment"
+        android:name="com.misw4203.vinyls.ui.album.CreateAlbumFragment"
+        android:label="Create Album"
+        tools:layout="@layout/activity_create_album" />
+
+    <!-- Otros fragmentos -->
     <fragment
         android:id="@+id/performersFragment"
         android:name="com.misw4203.vinyls.ui.performer.PerformersFragment"
         android:label="@string/title_performers"
-        tools:layout="@layout/performers_fragment" >
-    </fragment>
+        tools:layout="@layout/performers_fragment" />
     <fragment
         android:id="@+id/collectorFragment"
         android:name="com.misw4203.vinyls.ui.collector.CollectorFragment"
@@ -42,13 +67,4 @@
             app:argType="integer"
             android:defaultValue="0"/>
     </fragment>
-    <fragment
-        android:id="@+id/albumDetailFragment"
-        android:name="com.misw4203.vinyls.ui.album.AlbumDetailFragment"
-        android:label="Album Detail">
-        <argument
-            android:name="albumId"
-            app:argType="integer" />
-    </fragment>
-
 </navigation>

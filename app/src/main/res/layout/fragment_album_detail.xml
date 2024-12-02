@@ -4,71 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="album"
-            type="com.misw4203.vinyls.models.Album" />
+            type="com.misw4203.vinyls.models.AlbumDetail" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".ui.album.AlbumDetailFragment">
+        android:layout_height="match_parent">
 
-        <!-- Título del álbum alineado a la izquierda -->
-        <TextView
-            android:id="@+id/albumTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{album.name}"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="start"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Contenedor para la imagen y descripción -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".ui.album.AlbumDetailFragment">
 
-            <!-- Imagen del álbum -->
-            <ImageView
-                android:id="@+id/albumCover"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{album.cover}" />
-
-            <!-- Descripción -->
+            <!-- Título del álbum alineado a la izquierda -->
             <TextView
-                android:id="@+id/albumDescription"
-                android:layout_width="0dp"
+                android:id="@+id/albumTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="start"
+                android:text="@{album.name}"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Contenedor para la imagen y descripción -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <!-- Imagen del álbum -->
+                <ImageView
+                    android:id="@+id/albumCover"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginEnd="16dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{album.cover}" />
+
+                <!-- Descripción -->
+                <TextView
+                    android:id="@+id/albumDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@{album.description}"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Lista de tracks -->
+            <TextView
+                android:id="@+id/tracksTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Tracks"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tracksRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@{album.description}"
-                android:textSize="14sp"
-                android:lineSpacingExtra="4dp" />
+                tools:listitem="@layout/item_track" />
         </LinearLayout>
 
-        <!-- Lista de tracks -->
-        <TextView
-            android:id="@+id/tracksTitle"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnCommentCreate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tracks"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tracksRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:listitem="@layout/item_track" />
-    </LinearLayout>
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/add_comment"
+            app:srcCompat="@drawable/ic_rate_review" />
+    </FrameLayout>
 </layout>

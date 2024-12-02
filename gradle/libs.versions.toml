@@ -5,14 +5,18 @@ espressoCoreVersion = "3.5.1"
 fragmentTestingVersion = "1.5.4"
 glide = "4.16.0"
 agp = "8.5.2"
+gradle = "7.0.4"
 kotlin = "1.9.22"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinGradlePlugin = "1.9.22"
 lifecycleRuntimeKtx = "2.8.5"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
+picasso = "2.8"
+roomKtx = "2.6.1"
 runner = "1.5.2"
 volley = "1.2.1"
 recyclerview = "1.3.2"
@@ -38,8 +42,13 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-espresso-core-v351 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 androidx-fragment-testing-v154 = { module = "androidx.fragment:fragment-testing", version.ref = "fragmentTestingVersion" }
 androidx-junit-v115 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomKtx" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "core" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -53,6 +62,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
